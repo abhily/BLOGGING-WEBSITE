@@ -28,7 +28,7 @@ Installation
    
 4. Start the application:
     ```bash
-    npx nodemom app.js```
+    npx nodemom app.js
 
 
 5. Visit `http://localhost:300/Signup` in your browser to use the application.
