@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #555;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        nav a:hover {
+            background-color: #444;
+            transform: scale(1.1);
+        }
+        .user-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .user-card {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            width: 100%;
+            background-color: #444; /* Set a different background color for the user card */
+        }
+        .user-name-box {
+           /* background-color: #1e90ff;  Set background color to blue */
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px; /* Space between name box and posts */
+            width: 100%; /* Make it take the full width of the card */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
+        }
+        .user-name-box h2 {
+            margin: 0; /* Remove default margin */
+        }
+        .user-posts {
+            display: flex;
+            flex-wrap: wrap; /* Allow posts to wrap */
+            gap: 20px;
+        }
+        .post {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            min-width: 300px;
+            width: calc(33.33% - 30px); /* 33.33% width with gap included */
+            max-width: 400px; /* Maximum width of each post */
+            text-align: center; /* Center align text */
+            font-size: 18px; /* Increase font size */
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .post h3 {
+            margin: 0 0 10px 0;
+        }
+        .post p {
+            display: inline-block;
+        }
+        .read-more-link {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 5px;
+            transition: color 0.3s;
+        }
+        .read-more-link:hover {
+            color: #0056b3;
+        }
+        .like-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .like-button:hover {
+            background-color: #218838;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href='/profile'>
+                <img src="https://cdn-icons-png.flaticon.com/128/15126/15126410.png" alt="Profile Icon" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                My Profile
+            </a>
+            <!-- <a href="/login">Login</a> -->
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <h1 style="text-align: center;">All Posts</h1>
+    <div class="user-cards">
+        <% if (users.length > 0) { %>
+            <% users.forEach(user => { %>
+                <% if (user.posts && user.posts.length > 0) { %>
+                    <div class="user-card">
+                        <div class="user-name-box">
+                            <h2><%= user.name %>'s Posts</h2>
+                        </div>
+                        <div class="user-posts">
+                            <% user.posts.forEach(post => { %>
+                                <div class="post" id="<%= post._id %>">
+                                    <h3><%= post.postname %></h3>
+                                    <p>
+                                        <%= post.content.split(' ').slice(0, 25).join(' ') %>
+                                        <% if (post.content.split(' ').length > 25) { %>
+                                            ...<a href="/full/<%= post._id %>" class="read-more-link">Read More</a>
+                                        <% } %>
+                                    </p>
+                                    <a href="/like/<%= post._id %>" class="like-button-link">
+                                        <button class="like-button">Like (<%= post.likes %>)</button>
+                                    </a>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+        <% } else { %>
+            <p>No users found.</p>
+        <% } %>
+    </div>
+    <script>
+        document.querySelectorAll('.like-button-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const postId = this.closest('.post').id;
+                window.location.href = `${this.href}?redirect=/allpost#${postId}`;
+            });
+        });
+    </script>
+</body>
+</html>

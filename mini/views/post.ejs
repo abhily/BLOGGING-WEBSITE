@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Page</title>
+    <style>
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://www.wallpaperflare.com/static/603/313/146/paint-stains-purple-purple-wallpaper.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInSlideUp 0.5s ease-out;
+        }
+
+        .sidebar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar img:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: #238636;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #238636;
+        }
+
+        .sidebar .bottom-links {
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .sidebar .bottom-links a {
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #282828;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar .bottom-links a:hover {
+            background-color: #383838;
+            color: #ffffff;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+            animation: fadeInSlideUp 0.5s ease-out;
+        }
+
+        .post-form {
+            background-color:#282828;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-name {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(85, 85, 85, 0.8);
+            color: white;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-content {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(85, 85, 85, 0.8);
+            color: white;
+            font-size: 1em;
+            resize: vertical;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-content:focus, .post-name:focus {
+            outline: none;
+            box-shadow: 0 0 5px #238636;
+            background-color: rgba(100, 100, 100, 0.9);
+        }
+
+        .create-post-btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .create-post-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .posts-container {
+            background-color: #282828;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            animation: fadeInSlideUp 0.5s ease-out;
+        }
+
+        .posts {
+            display: flex;
+            justify-content: center; /* Center posts horizontally */
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .post {
+            width: calc(50% - 10px);
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(51, 51, 51, 0.8);
+            text-align: left;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            background-color: rgba(51, 51, 51, 0.9);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .post p {
+            font-size: 1em;
+            margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .read-more-link {
+            background-color: #238636; /* Button color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0; /* Center the button */
+            width: fit-content; /* Adjust width to fit content */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .read-more-link:hover {
+            background-color: #238636;
+            transform: translateY(-3px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="<%= user.im %>" alt="User Image"> <!-- Replace with the actual path to the user's image -->
+        <h3><%= user.name %></h3>
+        <a href="/profile">Visit Profile</a>
+        <div class="bottom-links">
+            <a href="/allpost">User Posts</a>
+            <a href="/myposts/<%= user.id %>">My Posts</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="container post-form-container">
+            <h2>Create a Post</h2>
+            <form class="post-form" action="/createpost/<%= user.id %>" method="post">
+                <input class="post-name" type="text" name="postname" placeholder="Post Name">
+                <div>
+                    <textarea id="postContent" class="post-content" name="content" rows="4" cols="50">What's on your mind?</textarea>
+                </div>
+                <br>
+                <button type="submit" class="create-post-btn">Create Post</button>
+            </form>
+        </div>
+        <div class="container posts-container">
+            <h2>Recent Posts</h2>
+            <div class="posts">
+                <% if (user.posts.length > 0) { %>
+                    <% user.posts.slice(0, 2).forEach(post => { %>
+                        <div class="post">
+                            <div class="post-title"><%= post.name %></div>
+                            <p><%= post.content %></p>
+                        </div>
+                    <% }); %>
+                    <% if (user.posts.length > 2) { %>
+                        <a href="/myposts/<%= user.id %>" class="read-more-link">My Posts</a>
+                    <% } %>
+                <% } else { %>
+                    <p>No posts yet.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

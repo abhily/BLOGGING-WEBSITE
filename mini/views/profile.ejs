@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background: #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #f0f0f0;
+        }
+        nav {
+            background: rgba(34, 34, 34, 0.9);
+            padding: 15px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 1.1em;
+        }
+        nav a:hover {
+            background-color: #444;
+        }
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            width: 100%;
+            position: relative;
+        }
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+            z-index: 2;
+        }
+        .profile-card img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s;
+            border: 5px solid #fff;
+        }
+        .profile-card img:hover {
+            transform: scale(1.1);
+        }
+        .profile-card h2 {
+            margin: 15px 0 5px;
+            color: #f0f0f0;
+            font-weight: 500;
+        }
+        .profile-card p {
+            color: #e0e0e0;
+            font-weight: 300;
+        }
+        .profile-card a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: #00c3ff;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1em;
+            box-shadow: 0 5px 15px rgba(0, 195, 255, 0.3);
+        }
+        .profile-card a:hover {
+            background-color: #00a8cc;
+            transform: scale(1.05);
+        }
+        .profile-card .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            color: #f0f0f0;
+        }
+        .profile-card .stats div {
+            text-align: center;
+        }
+        .profile-card .stats div p {
+            margin: 5px 0;
+            font-size: 1.2em;
+        }
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 195, 255, 0.4), transparent);
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(50px);
+            animation: glow 3s infinite;
+        }
+        @keyframes glow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="/myposts/<%= user._id %>">My posts</a>
+            <a href="/allpost">Users Posts</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <div class="profile-container">
+        <div class="glow-effect"></div>
+        <div class="profile-card">
+            <img src="<%= user.im %>" alt="Profile Image">
+            <h2><%= user.name %></h2>
+            <p><%= user.email %></p>
+            <a href="/postpage/<%= user._id %>">Create Posts</a>
+            <div class="stats">
+                <div>
+                    <p><strong>Posts</strong></p>
+                    <p><%= user.posts.length %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

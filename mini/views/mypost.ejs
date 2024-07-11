@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #ddd; /* Text color for non-white background */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 20px;
+            background-color: rgb(2, 2, 2); /* Dark background color */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .post {
+            background-color: #444; /* Darker background for posts */
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .post p {
+            color: #ddd; /* Text color for posts */
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            max-height: 4.5em; /* Approx. 3 lines */
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.3s ease;
+        }
+        .post.expanded p {
+            max-height: none; /* Remove height limit when expanded */
+        }
+        .delete-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .delete-icon:hover {
+            transform: scale(1.2);
+            filter: brightness(1.5);
+        }
+        .top-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        .top-buttons button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background-color: #238636;
+            color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .top-buttons button:hover {
+            background-color: #1e7e34;
+        }
+        .read-more-link {
+            color: #007bff;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            right: 40px;
+            transition: color 0.3s ease;
+        }
+        .read-more-link:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-buttons">
+            <button onclick="location.href='/profile'">My profile</button>
+            <button onclick="location.href='/allpost'">User Posts</button>
+            <button onclick="location.href='/logout'">Logout</button>
+        </div>
+        <h2><%= user.name %>'s Posts</h2>
+        <% if (user.posts.length > 0) { %>
+            <% user.posts.forEach(post => { %>
+                <div class="post" data-post-id="<%= post.id %>">
+                    <h3><%= post.postname %></h3>
+                    <p><%= post.content.split(' ').slice(0, 40).join(' ') %>...</p>
+                    <% if (post.content.split(' ').length > 40) { %>
+                        <span class="read-more-link" onclick="togglePost(this)" data-full-content="<%= post.content %>">Read More</span>
+                    <% } %>
+                    <form action="/delete/<%= post._id %>" method="POST" style="display: inline;">
+                        <input type="hidden" name="id" value="<%= post.id %>">
+                        <input type="image" src="https://cdn-icons-png.flaticon.com/512/10092/10092609.png" alt="Delete" class="delete-icon">
+                    </form>
+                    
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No posts yet.</p>
+        <% } %>
+    </div>
+
+    <script>
+        function togglePost(element) {
+            var post = element.closest('.post');
+            var content = post.querySelector('p');
+            var fullContent = element.getAttribute('data-full-content');
+            if (post.classList.contains('expanded')) {
+                content.innerHTML = fullContent.split(' ').slice(0, 40).join(' ') + '...';
+                element.innerHTML = 'Read More';
+                post.classList.remove('expanded');
+            } else {
+                content.innerHTML = fullContent;
+                element.innerHTML = 'Show Less';
+                post.classList.add('expanded');
+            }
+        }
+    </script>
+</body>
+</html>
