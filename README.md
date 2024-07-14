@@ -51,3 +51,8 @@ Feel free to fork this project and submit pull requests. For major changes, plea
 Contact
 
 For any questions or feedback, please contact me at heenakaf143@gmail.com
+
+Project Contributers :
+Ayesha Kouser B : Backend
+Bhavish Ramesh Kunder : Frontend
+Abhishek Raj : Frontend
