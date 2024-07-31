@@ -1,6 +1,6 @@
-MyBlogApp
+MyBlog Website
 
-MyBlogApp is a blogging platform where users can sign up, log in, create posts, view and manage their own posts, and interact with posts from other users. Built using EJS, Node.js, Express, JavaScript, MongoDB, and CSS.
+MyBlog Website is a blogging platform where users can sign up, log in, create posts, view and manage their own posts, and interact with posts from other users. Built using EJS, Node.js, Express, JavaScript, MongoDB, and CSS.
 
 Features
 
